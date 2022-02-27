@@ -23,7 +23,7 @@ get_header(); ?>
 				    
 				<?php endwhile; ?>	
 
-					<?php joints_page_navi(); ?>
+					<?php cv_page_navi(); ?>
 					
 				<?php else : ?>
 				
