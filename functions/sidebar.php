@@ -1,6 +1,6 @@
 <?php
 // SIDEBARS AND WIDGETIZED AREAS
-function joints_register_sidebars() {
+function cv_register_sidebars() {
 	register_sidebar(array(
 		'id' => 'sidebar1',
 		'name' => __('Sidebar 1', 'cv'),
@@ -47,4 +47,4 @@ function joints_register_sidebars() {
 	*/
 } /* end register sidebars */
 
-add_action( 'widgets_init', 'joints_register_sidebars' );
+add_action( 'widgets_init', 'cv_register_sidebars' );

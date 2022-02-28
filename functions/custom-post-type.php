@@ -1,5 +1,5 @@
 <?php
-/* joints Custom Post Type Example
+/* cv Custom Post Type Example
 This page walks you through creating 
 a custom post type and taxonomies. You
 can edit this one or copy the following code 
