@@ -37,7 +37,8 @@ $basicInformation = get_field('basic_information');
 
                                     <?php while (have_rows('socials')): the_row();
                                         ?>
-                                        <a class="btn btn-default btn-round btn-lg btn-icon" href="<?= get_sub_field('link') ?>"
+                                        <a class="btn btn-default btn-round btn-lg btn-icon"
+                                           href="<?= get_sub_field('link') ?>"
                                            rel="tooltip" title="<?= get_sub_field('name') ?>"><i
                                                     class="<?= get_sub_field('icon') ?>"></i></a>
                                     <?php endwhile; ?>
@@ -347,62 +348,37 @@ $basicInformation = get_field('basic_information');
                 <div class="card" data-aos="zoom-in">
                     <div class="carousel slide" id="cc-Indicators" data-ride="carousel">
                         <ol class="carousel-indicators">
-                            <li class="active" data-target="#cc-Indicators" data-slide-to="0"></li>
-                            <li data-target="#cc-Indicators" data-slide-to="1"></li>
-                            <li data-target="#cc-Indicators" data-slide-to="2"></li>
+                            <?php if (have_rows('references')): ?>
+
+                                <?php
+                                $numRows = count(get_sub_field('references'));
+                                for ($i = 0; $i <= $numRows; $i++):
+                                    ?>
+                                    <li class="<?= $i === 0 ? 'active' : '' ?>" data-target="#cc-Indicators"
+                                        data-slide-to="<?= $i ?>"></li>
+                                <?php endfor; ?>
+                            <?php endif; ?>
                         </ol>
                         <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <div class="row">
-                                    <div class="col-lg-2 col-md-3 cc-reference-header"><img
-                                                src="images/reference-image-1.jpg" alt="Image"/>
-                                        <div class="h5 pt-2">Aiyana</div>
-                                        <p class="category">CEO / WEBM</p>
+                            <?php if (have_rows('references')): ?>
+
+                                <?php while (have_rows('references')): the_row();
+                                    ?>
+                                    <div class="carousel-item <?= get_row_index() == 1 ? 'active' : '' ?>">
+                                        <div class="row">
+                                            <div class="col-lg-2 col-md-3 cc-reference-header"><img
+                                                        src="<?= get_sub_field('avatar') ?>"
+                                                        alt="<?= get_sub_field('name') ?>"/>
+                                                <div class="h5 pt-2"><?= get_sub_field('name') ?></div>
+                                                <p class="category"><?= get_sub_field('position') ?></p>
+                                            </div>
+                                            <div class="col-lg-10 col-md-9">
+                                                <p><?= get_sub_field('description') ?></p>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="col-lg-10 col-md-9">
-                                        <p> Habitasse venenatis commodo tempor eleifend arcu sociis sollicitudin ante
-                                            pulvinar ad, est porta cras erat ullamcorper volutpat metus duis platea
-                                            convallis, tortor primis ac quisque etiam luctus nisl nullam fames. Ligula
-                                            purus suscipit tempus nascetur curabitur donec nam ullamcorper, laoreet
-                                            nullam mauris dui aptent facilisis neque elementum ac, risus semper felis
-                                            parturient fringilla rhoncus eleifend.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="carousel-item">
-                                <div class="row">
-                                    <div class="col-lg-2 col-md-3 cc-reference-header"><img
-                                                src="images/reference-image-2.jpg" alt="Image"/>
-                                        <div class="h5 pt-2">Braiden</div>
-                                        <p class="category">CEO / Creativem</p>
-                                    </div>
-                                    <div class="col-lg-10 col-md-9">
-                                        <p> Habitasse venenatis commodo tempor eleifend arcu sociis sollicitudin ante
-                                            pulvinar ad, est porta cras erat ullamcorper volutpat metus duis platea
-                                            convallis, tortor primis ac quisque etiam luctus nisl nullam fames. Ligula
-                                            purus suscipit tempus nascetur curabitur donec nam ullamcorper, laoreet
-                                            nullam mauris dui aptent facilisis neque elementum ac, risus semper felis
-                                            parturient fringilla rhoncus eleifend.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="carousel-item">
-                                <div class="row">
-                                    <div class="col-lg-2 col-md-3 cc-reference-header"><img
-                                                src="images/reference-image-3.jpg" alt="Image"/>
-                                        <div class="h5 pt-2">Alexander</div>
-                                        <p class="category">CEO / Webnote</p>
-                                    </div>
-                                    <div class="col-lg-10 col-md-9">
-                                        <p> Habitasse venenatis commodo tempor eleifend arcu sociis sollicitudin ante
-                                            pulvinar ad, est porta cras erat ullamcorper volutpat metus duis platea
-                                            convallis, tortor primis ac quisque etiam luctus nisl nullam fames. Ligula
-                                            purus suscipit tempus nascetur curabitur donec nam ullamcorper, laoreet
-                                            nullam mauris dui aptent facilisis neque elementum ac, risus semper felis
-                                            parturient fringilla rhoncus eleifend.</p>
-                                    </div>
-                                </div>
-                            </div>
+                                <?php endwhile; ?>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
