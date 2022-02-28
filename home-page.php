@@ -37,7 +37,8 @@ $basicInformation = get_field('basic_information');
 
                                     <?php while (have_rows('socials')): the_row();
                                         ?>
-                                        <a class="btn btn-default btn-round btn-lg btn-icon" href="<?= get_sub_field('link') ?>"
+                                        <a class="btn btn-default btn-round btn-lg btn-icon"
+                                           href="<?= get_sub_field('link') ?>"
                                            rel="tooltip" title="<?= get_sub_field('name') ?>"><i
                                                     class="<?= get_sub_field('icon') ?>"></i></a>
                                     <?php endwhile; ?>
@@ -124,163 +125,50 @@ $basicInformation = get_field('basic_information');
                         <div class="h4 text-center mb-4 title">Portfolio</div>
                         <div class="nav-align-center">
                             <ul class="nav nav-pills nav-pills-primary" role="tablist">
-                                <li class="nav-item"><a class="nav-link active" data-toggle="tab"
-                                                        href="#web-development" role="tablist"><i class="fa fa-laptop"
-                                                                                                  aria-hidden="true"></i></a>
-                                </li>
-                                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#graphic-design"
-                                                        role="tablist"><i class="fa fa-picture-o"
-                                                                          aria-hidden="true"></i></a></li>
-                                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Photography"
-                                                        role="tablist"><i class="fa fa-camera"
-                                                                          aria-hidden="true"></i></a></li>
+
+                                <?php if (have_rows('portfolio')): ?>
+                                    <?php while (have_rows('portfolio')): the_row();
+                                        ?>
+                                        <li class="nav-item"><a
+                                                    class="nav-link <?= get_row_index() == 1 ? 'active' : '' ?>"
+                                                    data-toggle="tab"
+                                                    href="#<?= sanitize_title(get_sub_field('name')) ?>"
+                                                    role="tablist"><i class="<?= get_sub_field('icon') ?>"
+                                                                      aria-hidden="true"></i></a></li>
+                                    <?php endwhile; ?>
+                                <?php endif; ?>
                             </ul>
                         </div>
                     </div>
                 </div>
+
                 <div class="tab-content gallery mt-5">
-                    <div class="tab-pane active" id="web-development">
-                        <div class="ml-auto mr-auto">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="cc-porfolio-image img-raised" data-aos="fade-up"
-                                         data-aos-anchor-placement="top-bottom"><a href="#web-development">
-                                            <figure class="cc-effect"><img src="images/project-1.jpg" alt="Image"/>
-                                                <figcaption>
-                                                    <div class="h4">Recent Project</div>
-                                                    <p>Web Development</p>
-                                                </figcaption>
-                                            </figure>
-                                        </a></div>
-                                    <div class="cc-porfolio-image img-raised" data-aos="fade-up"
-                                         data-aos-anchor-placement="top-bottom"><a href="#web-development">
-                                            <figure class="cc-effect"><img src="images/project-2.jpg" alt="Image"/>
-                                                <figcaption>
-                                                    <div class="h4">Startup Project</div>
-                                                    <p>Web Development</p>
-                                                </figcaption>
-                                            </figure>
-                                        </a></div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="cc-porfolio-image img-raised" data-aos="fade-up"
-                                         data-aos-anchor-placement="top-bottom"><a href="#web-development">
-                                            <figure class="cc-effect"><img src="images/project-3.jpg" alt="Image"/>
-                                                <figcaption>
-                                                    <div class="h4">Food Order Project</div>
-                                                    <p>Web Development</p>
-                                                </figcaption>
-                                            </figure>
-                                        </a></div>
-                                    <div class="cc-porfolio-image img-raised" data-aos="fade-up"
-                                         data-aos-anchor-placement="top-bottom"><a href="#web-development">
-                                            <figure class="cc-effect"><img src="images/project-4.jpg" alt="Image"/>
-                                                <figcaption>
-                                                    <div class="h4">Web Advertising Project</div>
-                                                    <p>Web Development</p>
-                                                </figcaption>
-                                            </figure>
-                                        </a></div>
+                    <?php if (have_rows('portfolio')): ?>
+                        <?php while (have_rows('portfolio')): the_row();
+                            ?>
+                            <div class="tab-pane <?= get_row_index() == 1 ? 'active' : '' ?>"
+                                 id="<?= sanitize_title(get_sub_field('name')) ?>">
+                                <div class="ml-auto mr-auto">
+                                    <div class="row">
+                                        <?php foreach (get_sub_field('projects') as $key => $project): ?>
+                                            <div class="col-md-6">
+                                                <div class="cc-porfolio-image img-raised" data-aos="fade-up"
+                                                     data-aos-anchor-placement="top-bottom"><a href="#">
+                                                        <figure class="cc-effect"><img src="<?= $project['image'] ?>"
+                                                                                       alt="<?= $project['name'] ?>"/>
+                                                            <figcaption>
+                                                                <div class="h4"><?= $project['name'] ?></div>
+                                                                <p><?= $project['skill'] ?></p>
+                                                            </figcaption>
+                                                        </figure>
+                                                    </a></div>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane" id="graphic-design" role="tabpanel">
-                        <div class="ml-auto mr-auto">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="cc-porfolio-image img-raised" data-aos="fade-up"
-                                         data-aos-anchor-placement="top-bottom"><a href="#graphic-design">
-                                            <figure class="cc-effect"><img src="images/graphic-design-1.jpg"
-                                                                           alt="Image"/>
-                                                <figcaption>
-                                                    <div class="h4">Triangle Pattern</div>
-                                                    <p>Graphic Design</p>
-                                                </figcaption>
-                                            </figure>
-                                        </a></div>
-                                    <div class="cc-porfolio-image img-raised" data-aos="fade-up"
-                                         data-aos-anchor-placement="top-bottom"><a href="#graphic-design">
-                                            <figure class="cc-effect"><img src="images/graphic-design-2.jpg"
-                                                                           alt="Image"/>
-                                                <figcaption>
-                                                    <div class="h4">Abstract Umbrella</div>
-                                                    <p>Graphic Design</p>
-                                                </figcaption>
-                                            </figure>
-                                        </a></div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="cc-porfolio-image img-raised" data-aos="fade-up"
-                                         data-aos-anchor-placement="top-bottom"><a href="#graphic-design">
-                                            <figure class="cc-effect"><img src="images/graphic-design-3.jpg"
-                                                                           alt="Image"/>
-                                                <figcaption>
-                                                    <div class="h4">Cube Surface Texture</div>
-                                                    <p>Graphic Design</p>
-                                                </figcaption>
-                                            </figure>
-                                        </a></div>
-                                    <div class="cc-porfolio-image img-raised" data-aos="fade-up"
-                                         data-aos-anchor-placement="top-bottom"><a href="#graphic-design">
-                                            <figure class="cc-effect"><img src="images/graphic-design-4.jpg"
-                                                                           alt="Image"/>
-                                                <figcaption>
-                                                    <div class="h4">Abstract Line</div>
-                                                    <p>Graphic Design</p>
-                                                </figcaption>
-                                            </figure>
-                                        </a></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane" id="Photography" role="tabpanel">
-                        <div class="ml-auto mr-auto">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="cc-porfolio-image img-raised" data-aos="fade-up"
-                                         data-aos-anchor-placement="top-bottom"><a href="#Photography">
-                                            <figure class="cc-effect"><img src="images/photography-1.jpg" alt="Image"/>
-                                                <figcaption>
-                                                    <div class="h4">Photoshoot</div>
-                                                    <p>Photography</p>
-                                                </figcaption>
-                                            </figure>
-                                        </a></div>
-                                    <div class="cc-porfolio-image img-raised" data-aos="fade-up"
-                                         data-aos-anchor-placement="top-bottom"><a href="#Photography">
-                                            <figure class="cc-effect"><img src="images/photography-3.jpg" alt="Image"/>
-                                                <figcaption>
-                                                    <div class="h4">Wedding Photoshoot</div>
-                                                    <p>Photography</p>
-                                                </figcaption>
-                                            </figure>
-                                        </a></div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="cc-porfolio-image img-raised" data-aos="fade-up"
-                                         data-aos-anchor-placement="top-bottom"><a href="#Photography">
-                                            <figure class="cc-effect"><img src="images/photography-2.jpg" alt="Image"/>
-                                                <figcaption>
-                                                    <div class="h4">Beach Photoshoot</div>
-                                                    <p>Photography</p>
-                                                </figcaption>
-                                            </figure>
-                                        </a></div>
-                                    <div class="cc-porfolio-image img-raised" data-aos="fade-up"
-                                         data-aos-anchor-placement="top-bottom"><a href="#Photography">
-                                            <figure class="cc-effect"><img src="images/photography-4.jpg" alt="Image"/>
-                                                <figcaption>
-                                                    <div class="h4">Nature Photoshoot</div>
-                                                    <p>Photography</p>
-                                                </figcaption>
-                                            </figure>
-                                        </a></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        <?php endwhile; ?>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
@@ -347,62 +235,37 @@ $basicInformation = get_field('basic_information');
                 <div class="card" data-aos="zoom-in">
                     <div class="carousel slide" id="cc-Indicators" data-ride="carousel">
                         <ol class="carousel-indicators">
-                            <li class="active" data-target="#cc-Indicators" data-slide-to="0"></li>
-                            <li data-target="#cc-Indicators" data-slide-to="1"></li>
-                            <li data-target="#cc-Indicators" data-slide-to="2"></li>
+                            <?php if (have_rows('references')): ?>
+
+                                <?php
+                                $numRows = count(get_sub_field('references'));
+                                for ($i = 0; $i <= $numRows; $i++):
+                                    ?>
+                                    <li class="<?= $i === 0 ? 'active' : '' ?>" data-target="#cc-Indicators"
+                                        data-slide-to="<?= $i ?>"></li>
+                                <?php endfor; ?>
+                            <?php endif; ?>
                         </ol>
                         <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <div class="row">
-                                    <div class="col-lg-2 col-md-3 cc-reference-header"><img
-                                                src="images/reference-image-1.jpg" alt="Image"/>
-                                        <div class="h5 pt-2">Aiyana</div>
-                                        <p class="category">CEO / WEBM</p>
+                            <?php if (have_rows('references')): ?>
+
+                                <?php while (have_rows('references')): the_row();
+                                    ?>
+                                    <div class="carousel-item <?= get_row_index() == 1 ? 'active' : '' ?>">
+                                        <div class="row">
+                                            <div class="col-lg-2 col-md-3 cc-reference-header"><img
+                                                        src="<?= get_sub_field('avatar') ?>"
+                                                        alt="<?= get_sub_field('name') ?>"/>
+                                                <div class="h5 pt-2"><?= get_sub_field('name') ?></div>
+                                                <p class="category"><?= get_sub_field('position') ?></p>
+                                            </div>
+                                            <div class="col-lg-10 col-md-9">
+                                                <p><?= get_sub_field('description') ?></p>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="col-lg-10 col-md-9">
-                                        <p> Habitasse venenatis commodo tempor eleifend arcu sociis sollicitudin ante
-                                            pulvinar ad, est porta cras erat ullamcorper volutpat metus duis platea
-                                            convallis, tortor primis ac quisque etiam luctus nisl nullam fames. Ligula
-                                            purus suscipit tempus nascetur curabitur donec nam ullamcorper, laoreet
-                                            nullam mauris dui aptent facilisis neque elementum ac, risus semper felis
-                                            parturient fringilla rhoncus eleifend.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="carousel-item">
-                                <div class="row">
-                                    <div class="col-lg-2 col-md-3 cc-reference-header"><img
-                                                src="images/reference-image-2.jpg" alt="Image"/>
-                                        <div class="h5 pt-2">Braiden</div>
-                                        <p class="category">CEO / Creativem</p>
-                                    </div>
-                                    <div class="col-lg-10 col-md-9">
-                                        <p> Habitasse venenatis commodo tempor eleifend arcu sociis sollicitudin ante
-                                            pulvinar ad, est porta cras erat ullamcorper volutpat metus duis platea
-                                            convallis, tortor primis ac quisque etiam luctus nisl nullam fames. Ligula
-                                            purus suscipit tempus nascetur curabitur donec nam ullamcorper, laoreet
-                                            nullam mauris dui aptent facilisis neque elementum ac, risus semper felis
-                                            parturient fringilla rhoncus eleifend.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="carousel-item">
-                                <div class="row">
-                                    <div class="col-lg-2 col-md-3 cc-reference-header"><img
-                                                src="images/reference-image-3.jpg" alt="Image"/>
-                                        <div class="h5 pt-2">Alexander</div>
-                                        <p class="category">CEO / Webnote</p>
-                                    </div>
-                                    <div class="col-lg-10 col-md-9">
-                                        <p> Habitasse venenatis commodo tempor eleifend arcu sociis sollicitudin ante
-                                            pulvinar ad, est porta cras erat ullamcorper volutpat metus duis platea
-                                            convallis, tortor primis ac quisque etiam luctus nisl nullam fames. Ligula
-                                            purus suscipit tempus nascetur curabitur donec nam ullamcorper, laoreet
-                                            nullam mauris dui aptent facilisis neque elementum ac, risus semper felis
-                                            parturient fringilla rhoncus eleifend.</p>
-                                    </div>
-                                </div>
-                            </div>
+                                <?php endwhile; ?>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
