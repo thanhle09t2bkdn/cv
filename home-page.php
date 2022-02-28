@@ -2,8 +2,10 @@
 /*
 Template Name: Home Page
 */
-$header = get_field('header');
 get_header();
+$profile = get_field('profile');
+$about = get_field('about');
+$basicInformation = get_field('basic_information');
 ?>
 <div class="page-content">
     <div>
@@ -11,15 +13,18 @@ get_header();
             <div class="wrapper">
                 <div class="page-header page-header-small" filter-color="green">
                     <div class="page-header-image" data-parallax="true"
-                         style="background-image: url('images/cc-bg-1.jpg')"></div>
+                         style="background-image: url('<?= get_template_directory_uri(); ?>/assets/images/cc-bg-1.jpg')"></div>
                     <div class="container">
                         <div class="content-center">
-                            <div class="cc-profile-image"><a href="#"><img src="images/anthony.jpg" alt="Image"/></a>
+                            <div class="cc-profile-image"><a href="#"><img src="<?= $profile['avatar'] ?>"
+                                                                           alt="<?= $profile['full_name'] ?>"/></a>
                             </div>
-                            <div class="h2 title">Anthony Barnett</div>
-                            <p class="category text-white">Web Developer, Graphic Designer, Photographer</p><a
-                                    class="btn btn-primary smooth-scroll mr-2" href="#contact" data-aos="zoom-in"
-                                    data-aos-anchor="data-aos-anchor">Hire Me</a><a class="btn btn-primary" href="#"
+                            <div class="h2 title"><?= $profile['full_name'] ?></div>
+                            <p class="category text-white"><?= $profile['role'] ?></p><a
+                                    class="btn btn-primary smooth-scroll mr-2" href="<?= $profile['hire_me'] ?>"
+                                    data-aos="zoom-in"
+                                    data-aos-anchor="data-aos-anchor">Hire Me</a><a class="btn btn-primary"
+                                                                                    href="<?= $profile['download_cv'] ?>"
                                                                                     data-aos="zoom-in"
                                                                                     data-aos-anchor="data-aos-anchor">Download
                                 CV</a>
@@ -27,15 +32,18 @@ get_header();
                     </div>
                     <div class="section">
                         <div class="container">
-                            <div class="button-container"><a class="btn btn-default btn-round btn-lg btn-icon" href="#"
-                                                             rel="tooltip" title="Follow me on Facebook"><i
-                                            class="fa fa-facebook"></i></a><a
-                                        class="btn btn-default btn-round btn-lg btn-icon" href="#" rel="tooltip"
-                                        title="Follow me on Twitter"><i class="fa fa-twitter"></i></a><a
-                                        class="btn btn-default btn-round btn-lg btn-icon" href="#" rel="tooltip"
-                                        title="Follow me on Google+"><i class="fa fa-google-plus"></i></a><a
-                                        class="btn btn-default btn-round btn-lg btn-icon" href="#" rel="tooltip"
-                                        title="Follow me on Instagram"><i class="fa fa-instagram"></i></a></div>
+                            <div class="button-container">
+                                <?php if (have_rows('socials')): ?>
+
+                                    <?php while (have_rows('socials')): the_row();
+                                        ?>
+                                        <a class="btn btn-default btn-round btn-lg btn-icon" href="<?= get_sub_field('link') ?>"
+                                           rel="tooltip" title="<?= get_sub_field('name') ?>"><i
+                                                    class="<?= get_sub_field('icon') ?>"></i></a>
+                                    <?php endwhile; ?>
+                                <?php endif; ?>
+
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -48,12 +56,7 @@ get_header();
                         <div class="col-lg-6 col-md-12">
                             <div class="card-body">
                                 <div class="h4 mt-0 title">About</div>
-                                <p>Hello! I am Anthony Barnett. Web Developer, Graphic Designer and Photographer.</p>
-                                <p>Creative CV is a HTML resume template for professionals. Built with Bootstrap 4, Now
-                                    UI Kit and FontAwesome, this modern and responsive design template is perfect to
-                                    showcase your portfolio, skills and experience. <a
-                                            href="https://templateflip.com/templates/creative-cv/" target="_blank">Learn
-                                        More</a></p>
+                                <?= $about ?>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-12">
@@ -61,23 +64,23 @@ get_header();
                                 <div class="h4 mt-0 title">Basic Information</div>
                                 <div class="row">
                                     <div class="col-sm-4"><strong class="text-uppercase">Age:</strong></div>
-                                    <div class="col-sm-8">24</div>
+                                    <div class="col-sm-8"><?= $basicInformation['age'] ?></div>
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col-sm-4"><strong class="text-uppercase">Email:</strong></div>
-                                    <div class="col-sm-8">anthony@company.com</div>
+                                    <div class="col-sm-8"><?= $basicInformation['email'] ?></div>
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col-sm-4"><strong class="text-uppercase">Phone:</strong></div>
-                                    <div class="col-sm-8">+1718-111-0011</div>
+                                    <div class="col-sm-8"><?= $basicInformation['phone'] ?></div>
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col-sm-4"><strong class="text-uppercase">Address:</strong></div>
-                                    <div class="col-sm-8">140, City Center, New York, U.S.A</div>
+                                    <div class="col-sm-8"><?= $basicInformation['address'] ?></div>
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col-sm-4"><strong class="text-uppercase">Language:</strong></div>
-                                    <div class="col-sm-8">English, German, French</div>
+                                    <div class="col-sm-8"><?= $basicInformation['language'] ?></div>
                                 </div>
                             </div>
                         </div>
@@ -91,81 +94,24 @@ get_header();
                 <div class="card" data-aos="fade-up" data-aos-anchor-placement="top-bottom">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-6">
-                                <div class="progress-container progress-primary"><span
-                                            class="progress-badge">HTML</span>
-                                    <div class="progress">
-                                        <div class="progress-bar progress-bar-primary" data-aos="progress-full"
-                                             data-aos-offset="10" data-aos-duration="2000" role="progressbar"
-                                             aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
-                                             style="width: 80%;"></div>
-                                        <span class="progress-value">80%</span>
+                            <?php if (have_rows('professional_skills')): ?>
+
+                                <?php while (have_rows('professional_skills')): the_row();
+                                    ?>
+                                    <div class="col-md-6">
+                                        <div class="progress-container progress-primary"><span
+                                                    class="progress-badge"><?= get_sub_field('name') ?></span>
+                                            <div class="progress">
+                                                <div class="progress-bar progress-bar-primary" data-aos="progress-full"
+                                                     data-aos-offset="10" data-aos-duration="2000" role="progressbar"
+                                                     aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
+                                                     style="width: <?= get_sub_field('value') ?>%;"></div>
+                                                <span class="progress-value"><?= get_sub_field('value') ?>%</span>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="progress-container progress-primary"><span class="progress-badge">CSS</span>
-                                    <div class="progress">
-                                        <div class="progress-bar progress-bar-primary" data-aos="progress-full"
-                                             data-aos-offset="10" data-aos-duration="2000" role="progressbar"
-                                             aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
-                                             style="width: 75%;"></div>
-                                        <span class="progress-value">75%</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="progress-container progress-primary"><span
-                                            class="progress-badge">JavaScript</span>
-                                    <div class="progress">
-                                        <div class="progress-bar progress-bar-primary" data-aos="progress-full"
-                                             data-aos-offset="10" data-aos-duration="2000" role="progressbar"
-                                             aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
-                                             style="width: 60%;"></div>
-                                        <span class="progress-value">60%</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="progress-container progress-primary"><span
-                                            class="progress-badge">SASS</span>
-                                    <div class="progress">
-                                        <div class="progress-bar progress-bar-primary" data-aos="progress-full"
-                                             data-aos-offset="10" data-aos-duration="2000" role="progressbar"
-                                             aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
-                                             style="width: 60%;"></div>
-                                        <span class="progress-value">60%</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="progress-container progress-primary"><span
-                                            class="progress-badge">Bootstrap</span>
-                                    <div class="progress">
-                                        <div class="progress-bar progress-bar-primary" data-aos="progress-full"
-                                             data-aos-offset="10" data-aos-duration="2000" role="progressbar"
-                                             aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
-                                             style="width: 75%;"></div>
-                                        <span class="progress-value">75%</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="progress-container progress-primary"><span
-                                            class="progress-badge">Photoshop</span>
-                                    <div class="progress">
-                                        <div class="progress-bar progress-bar-primary" data-aos="progress-full"
-                                             data-aos-offset="10" data-aos-duration="2000" role="progressbar"
-                                             aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
-                                             style="width: 70%;"></div>
-                                        <span class="progress-value">70%</span>
-                                    </div>
-                                </div>
-                            </div>
+                                <?php endwhile; ?>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
@@ -341,146 +287,58 @@ get_header();
         <div class="section" id="experience">
             <div class="container cc-experience">
                 <div class="h4 text-center mb-4 title">Work Experience</div>
-                <div class="card">
-                    <div class="row">
-                        <div class="col-md-3 bg-primary" data-aos="fade-right" data-aos-offset="50"
-                             data-aos-duration="500">
-                            <div class="card-body cc-experience-header">
-                                <p>March 2016 - Present</p>
-                                <div class="h5">CreativeM</div>
+                <?php if (have_rows('work_experience')): ?>
+
+                    <?php while (have_rows('work_experience')): the_row();
+                        ?>
+                        <div class="card">
+                            <div class="row">
+                                <div class="col-md-3 bg-primary" data-aos="fade-right" data-aos-offset="50"
+                                     data-aos-duration="500">
+                                    <div class="card-body cc-experience-header">
+                                        <p><?= get_sub_field('from') ?> - <?= get_sub_field('to') ?></p>
+                                        <div class="h5"><?= get_sub_field('name') ?></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-9" data-aos="fade-left" data-aos-offset="50" data-aos-duration="500">
+                                    <div class="card-body">
+                                        <div class="h5"><?= get_sub_field('position') ?></div>
+                                        <p><?= get_sub_field('description') ?></p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-9" data-aos="fade-left" data-aos-offset="50" data-aos-duration="500">
-                            <div class="card-body">
-                                <div class="h5">Front End Developer</div>
-                                <p>Euismod massa scelerisque suspendisse fermentum habitant vitae ullamcorper magna quam
-                                    iaculis, tristique sapien taciti mollis interdum sagittis libero nunc inceptos
-                                    tellus, hendrerit vel eleifend primis lectus quisque cubilia sed mauris. Lacinia
-                                    porta vestibulum diam integer quisque eros pulvinar curae, curabitur feugiat arcu
-                                    vivamus parturient aliquet laoreet at, eu etiam pretium molestie ultricies
-                                    sollicitudin dui.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="row">
-                        <div class="col-md-3 bg-primary" data-aos="fade-right" data-aos-offset="50"
-                             data-aos-duration="500">
-                            <div class="card-body cc-experience-header">
-                                <p>April 2014 - March 2016</p>
-                                <div class="h5">WebNote</div>
-                            </div>
-                        </div>
-                        <div class="col-md-9" data-aos="fade-left" data-aos-offset="50" data-aos-duration="500">
-                            <div class="card-body">
-                                <div class="h5">Web Developer</div>
-                                <p>Euismod massa scelerisque suspendisse fermentum habitant vitae ullamcorper magna quam
-                                    iaculis, tristique sapien taciti mollis interdum sagittis libero nunc inceptos
-                                    tellus, hendrerit vel eleifend primis lectus quisque cubilia sed mauris. Lacinia
-                                    porta vestibulum diam integer quisque eros pulvinar curae, curabitur feugiat arcu
-                                    vivamus parturient aliquet laoreet at, eu etiam pretium molestie ultricies
-                                    sollicitudin dui.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="row">
-                        <div class="col-md-3 bg-primary" data-aos="fade-right" data-aos-offset="50"
-                             data-aos-duration="500">
-                            <div class="card-body cc-experience-header">
-                                <p>April 2013 - February 2014</p>
-                                <div class="h5">WEBM</div>
-                            </div>
-                        </div>
-                        <div class="col-md-9" data-aos="fade-left" data-aos-offset="50" data-aos-duration="500">
-                            <div class="card-body">
-                                <div class="h5">Intern</div>
-                                <p>Euismod massa scelerisque suspendisse fermentum habitant vitae ullamcorper magna quam
-                                    iaculis, tristique sapien taciti mollis interdum sagittis libero nunc inceptos
-                                    tellus, hendrerit vel eleifend primis lectus quisque cubilia sed mauris. Lacinia
-                                    porta vestibulum diam integer quisque eros pulvinar curae, curabitur feugiat arcu
-                                    vivamus parturient aliquet laoreet at, eu etiam pretium molestie ultricies
-                                    sollicitudin dui.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                    <?php endwhile; ?>
+                <?php endif; ?>
             </div>
         </div>
         <div class="section">
             <div class="container cc-education">
                 <div class="h4 text-center mb-4 title">Education</div>
-                <div class="card">
-                    <div class="row">
-                        <div class="col-md-3 bg-primary" data-aos="fade-right" data-aos-offset="50"
-                             data-aos-duration="500">
-                            <div class="card-body cc-education-header">
-                                <p>2013 - 2015</p>
-                                <div class="h5">Master's Degree</div>
+                <?php if (have_rows('education')): ?>
+
+                    <?php while (have_rows('education')): the_row();
+                        ?>
+                        <div class="card">
+                            <div class="row">
+                                <div class="col-md-3 bg-primary" data-aos="fade-right" data-aos-offset="50"
+                                     data-aos-duration="500">
+                                    <div class="card-body cc-education-header">
+                                        <p><?= get_sub_field('from') ?> - <?= get_sub_field('to') ?></p>
+                                        <div class="h5"><?= get_sub_field('degree') ?></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-9" data-aos="fade-left" data-aos-offset="50" data-aos-duration="500">
+                                    <div class="card-body">
+                                        <div class="h5"><?= get_sub_field('name') ?></div>
+                                        <p class="category"><?= get_sub_field('sub_name') ?></p>
+                                        <p><?= get_sub_field('description') ?></p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-9" data-aos="fade-left" data-aos-offset="50" data-aos-duration="500">
-                            <div class="card-body">
-                                <div class="h5">Master of Information Technology</div>
-                                <p class="category">University of Computer Science</p>
-                                <p>Euismod massa scelerisque suspendisse fermentum habitant vitae ullamcorper magna quam
-                                    iaculis, tristique sapien taciti mollis interdum sagittis libero nunc inceptos
-                                    tellus, hendrerit vel eleifend primis lectus quisque cubilia sed mauris. Lacinia
-                                    porta vestibulum diam integer quisque eros pulvinar curae, curabitur feugiat arcu
-                                    vivamus parturient aliquet laoreet at, eu etiam pretium molestie ultricies
-                                    sollicitudin dui.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="row">
-                        <div class="col-md-3 bg-primary" data-aos="fade-right" data-aos-offset="50"
-                             data-aos-duration="500">
-                            <div class="card-body cc-education-header">
-                                <p>2009 - 2013</p>
-                                <div class="h5">Bachelor's Degree</div>
-                            </div>
-                        </div>
-                        <div class="col-md-9" data-aos="fade-left" data-aos-offset="50" data-aos-duration="500">
-                            <div class="card-body">
-                                <div class="h5">Bachelor of Computer Science</div>
-                                <p class="category">University of Computer Science</p>
-                                <p>Euismod massa scelerisque suspendisse fermentum habitant vitae ullamcorper magna quam
-                                    iaculis, tristique sapien taciti mollis interdum sagittis libero nunc inceptos
-                                    tellus, hendrerit vel eleifend primis lectus quisque cubilia sed mauris. Lacinia
-                                    porta vestibulum diam integer quisque eros pulvinar curae, curabitur feugiat arcu
-                                    vivamus parturient aliquet laoreet at, eu etiam pretium molestie ultricies
-                                    sollicitudin dui.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="row">
-                        <div class="col-md-3 bg-primary" data-aos="fade-right" data-aos-offset="50"
-                             data-aos-duration="500">
-                            <div class="card-body cc-education-header">
-                                <p>2007 - 2009</p>
-                                <div class="h5">High School</div>
-                            </div>
-                        </div>
-                        <div class="col-md-9" data-aos="fade-left" data-aos-offset="50" data-aos-duration="500">
-                            <div class="card-body">
-                                <div class="h5">Science and Mathematics</div>
-                                <p class="category">School of Secondary board</p>
-                                <p>Euismod massa scelerisque suspendisse fermentum habitant vitae ullamcorper magna quam
-                                    iaculis, tristique sapien taciti mollis interdum sagittis libero nunc inceptos
-                                    tellus, hendrerit vel eleifend primis lectus quisque cubilia sed mauris. Lacinia
-                                    porta vestibulum diam integer quisque eros pulvinar curae, curabitur feugiat arcu
-                                    vivamus parturient aliquet laoreet at, eu etiam pretium molestie ultricies
-                                    sollicitudin dui.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                    <?php endwhile; ?>
+                <?php endif; ?>
             </div>
         </div>
         <div class="section" id="reference">
@@ -551,7 +409,8 @@ get_header();
             </div>
         </div>
         <div class="section" id="contact">
-            <div class="cc-contact-information" style="background-image: url('<?= get_template_directory_uri(); ?>/assets/images/staticmap.png')">
+            <div class="cc-contact-information"
+                 style="background-image: url('<?= get_template_directory_uri(); ?>/assets/images/staticmap.png')">
                 <div class="container">
                     <div class="cc-contact">
                         <div class="row">
